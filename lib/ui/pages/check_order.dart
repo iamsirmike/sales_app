@@ -59,8 +59,27 @@ class _CheckOrderState extends State<CheckOrder> {
                           ),
                           subtitle: Text(
                               'GHC${snapshot.data.documents[index].data['price']}'),
-                          trailing: Text(
-                              snapshot.data.documents[index].data['address']),
+                          trailing: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(snapshot
+                                  .data.documents[index].data['address']),
+                                  SizedBox(height: 5,),
+                              GestureDetector(
+                                onTap: () {
+                                  _firestore
+                                      .collection('order')
+                                      .document(snapshot
+                                          .data.documents[index].documentID)
+                                      .delete();
+                                },
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     });

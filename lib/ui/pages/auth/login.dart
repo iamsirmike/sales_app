@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sales_app/core/services/AuthService.dart';
 import 'package:sales_app/ui/pages/auth/register.dart';
+import 'package:sales_app/ui/pages/navigation.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -96,7 +97,9 @@ class _LoginPageState extends State<LoginPage> {
                         _login();
                       },
                       child: isLoading
-                          ? CircularProgressIndicator(backgroundColor: Colors.white,)
+                          ? CircularProgressIndicator(
+                              backgroundColor: Colors.white,
+                            )
                           : Text(
                               'Log In',
                               style: TextStyle(color: Colors.white),
@@ -117,7 +120,11 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         isLoading = true;
       });
-      await _auth.signInWithEmail(email, password);
+      final result = await _auth.signInWithEmail(email, password);
+      if (result != null) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Navigation()));
+      }
       setState(() {
         isLoading = false;
       });

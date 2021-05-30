@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
       stock = result.documents.length;
     });
   }
+
   Future checkOrder<QuerySnapshot>() async {
     var result = await _firestore.collection('order').getDocuments();
     setState(() {
@@ -49,12 +50,26 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 50),
-              Text(
-                'Dashboard',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'Dashboard',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                    ),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      auth.signOut();
+                    },
+                    child: Text(
+                      'Sign Out',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 40),
               Container(
@@ -223,12 +238,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              //GestureDetector(
-              //   onTap: () {
-              //     auth.signOut();
-              //   },
-              //   child: Text('Sign Out'),
-              // ),
             ],
           ),
         ),
